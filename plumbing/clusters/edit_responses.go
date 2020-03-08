@@ -7,6 +7,7 @@ package clusters
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -94,7 +95,7 @@ type EditBody struct {
 	EnableElasticDisk bool `json:"enable_elastic_disk,omitempty"`
 
 	// init scripts
-	InitScripts *models.InitScriptInfo `json:"init_scripts,omitempty"`
+	InitScripts []*models.InitScriptInfo `json:"init_scripts"`
 
 	// instance pool id
 	InstancePoolID string `json:"instance_pool_id,omitempty"`
@@ -254,13 +255,20 @@ func (o *EditBody) validateInitScripts(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if o.InitScripts != nil {
-		if err := o.InitScripts.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("body" + "." + "init_scripts")
-			}
-			return err
+	for i := 0; i < len(o.InitScripts); i++ {
+		if swag.IsZero(o.InitScripts[i]) { // not required
+			continue
 		}
+
+		if o.InitScripts[i] != nil {
+			if err := o.InitScripts[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("body" + "." + "init_scripts" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
