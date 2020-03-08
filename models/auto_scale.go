@@ -15,10 +15,10 @@ import (
 type AutoScale struct {
 
 	// max workers
-	MaxWorkers int64 `json:"max_workers,omitempty"`
+	MaxWorkers int32 `json:"max_workers,omitempty"`
 
 	// min workers
-	MinWorkers int64 `json:"min_workers,omitempty"`
+	MinWorkers int32 `json:"min_workers,omitempty"`
 }
 
 // Validate validates this auto scale

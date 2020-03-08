@@ -60,7 +60,9 @@ paths:
               cluster_log_conf:
                 $ref: '#/definitions/ClusterLogConf'
               init_scripts:
-                $ref: '#/definitions/InitScriptInfo'
+                type: array
+                items:
+                  $ref: '#/definitions/InitScriptInfo'
               docker_image:
                 $ref: '#/definitions/DockerImage'
               spark_env_vars:
@@ -137,7 +139,9 @@ paths:
               cluster_log_conf:
                 $ref: '#/definitions/ClusterLogConf'
               init_scripts:
-                $ref: '#/definitions/InitScriptInfo'
+                type: array
+                items:
+                  $ref: '#/definitions/InitScriptInfo'
               docker_image:
                 $ref: '#/definitions/DockerImage'
               spark_env_vars:
@@ -224,8 +228,10 @@ definitions:
     properties:
       min_workers:
         type: integer
+        format: int32
       max_workers:
         type: integer
+        format: int32
 
   SparkNode:
     type: object
@@ -496,7 +502,9 @@ definitions:
       cluster_log_conf:
         $ref: '#/definitions/ClusterLogConf'
       init_scripts:
-        $ref: '#/definitions/InitScriptInfo'
+        type: array
+        items:
+          $ref: '#/definitions/InitScriptInfo'
       docker_image:
         $ref: '#/definitions/DockerImage'
       spark_env_vars:

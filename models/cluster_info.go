@@ -72,7 +72,7 @@ type ClusterInfo struct {
 	Executors []*SparkNode `json:"executors"`
 
 	// init scripts
-	InitScripts *InitScriptInfo `json:"init_scripts,omitempty"`
+	InitScripts []*InitScriptInfo `json:"init_scripts"`
 
 	// instance pool id
 	InstancePoolID string `json:"instance_pool_id,omitempty"`
@@ -380,13 +380,20 @@ func (m *ClusterInfo) validateInitScripts(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.InitScripts != nil {
-		if err := m.InitScripts.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("init_scripts")
-			}
-			return err
+	for i := 0; i < len(m.InitScripts); i++ {
+		if swag.IsZero(m.InitScripts[i]) { // not required
+			continue
 		}
+
+		if m.InitScripts[i] != nil {
+			if err := m.InitScripts[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("init_scripts" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
