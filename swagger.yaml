@@ -15,6 +15,16 @@ consumes:
 produces:
   - application/json
 
+responses:
+  Error:
+    description: error
+    schema:
+      $ref: '#/definitions/Error'
+  InvalidAccessToken:
+    description: invalid access token
+    schema:
+      type: string
+
 securityDefinitions:
   token:
     type: apiKey
@@ -33,49 +43,7 @@ paths:
         - name: body
           in: body
           schema:
-            type: object
-            properties:
-              num_workers:
-                type: integer
-              autoscale:
-                $ref: '#/definitions/AutoScale'
-              cluster_name:
-                type: string
-              spark_version:
-                type: string
-              spark_conf:
-                $ref: '#/definitions/SparkConfPair'
-              aws_attributes:
-                $ref: '#/definitions/AwsAttributes'
-              node_type_id:
-                type: string
-              driver_node_type_id:
-                type: string
-              ssh_public_keys:
-                type: array
-                items:
-                  type: string
-              custom_tags:
-                $ref: '#/definitions/ClusterTag'
-              cluster_log_conf:
-                $ref: '#/definitions/ClusterLogConf'
-              init_scripts:
-                type: array
-                items:
-                  $ref: '#/definitions/InitScriptInfo'
-              docker_image:
-                $ref: '#/definitions/DockerImage'
-              spark_env_vars:
-                $ref: '#/definitions/SparkEnvPair'
-              autotermination_minutes:
-                type: integer
-                format: int32
-              enable_elastic_disk:
-                type: boolean
-              instance_pool_id:
-                type: string
-              idempotency_token:
-                type: string
+            $ref: '#/definitions/ClusterAttributes'
           required: true
       responses:
         200:
@@ -85,6 +53,10 @@ paths:
             properties:
               cluster_id:
                 type: string
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
 
   /clusters/get:
     get:
@@ -100,6 +72,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ClusterInfo'
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
 
   /clusters/edit:
     post:
@@ -156,6 +132,10 @@ paths:
       responses:
         200:
           description: OK
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
 
   /clusters/delete:
     post:
@@ -172,6 +152,10 @@ paths:
       responses:
         200:
           description: Terminated
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
 
   /clusters/list:
     get:
@@ -184,6 +168,10 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ClusterInfo'
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
 
   /clusters/permanent-delete:
     post:
@@ -200,6 +188,10 @@ paths:
       responses:
         200:
           description: Deleted
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
 
   /clusters/resize:
     post:
@@ -221,6 +213,10 @@ paths:
       responses:
         200:
           description: OK
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
 
 definitions:
   AutoScale:
@@ -457,6 +453,51 @@ definitions:
       instance_pool_error_code:
         type: string
 
+  ClusterAttributes:
+    type: object
+    properties:
+      num_workers:
+        type: integer
+      autoscale:
+        $ref: '#/definitions/AutoScale'
+      cluster_name:
+        type: string
+      spark_version:
+        type: string
+      spark_conf:
+        $ref: '#/definitions/SparkConfPair'
+      aws_attributes:
+        $ref: '#/definitions/AwsAttributes'
+      node_type_id:
+        type: string
+      driver_node_type_id:
+        type: string
+      ssh_public_keys:
+        type: array
+        items:
+          type: string
+      custom_tags:
+        $ref: '#/definitions/ClusterTag'
+      cluster_log_conf:
+        $ref: '#/definitions/ClusterLogConf'
+      init_scripts:
+        type: array
+        items:
+          $ref: '#/definitions/InitScriptInfo'
+      docker_image:
+        $ref: '#/definitions/DockerImage'
+      spark_env_vars:
+        $ref: '#/definitions/SparkEnvPair'
+      autotermination_minutes:
+        type: integer
+        format: int32
+      enable_elastic_disk:
+        type: boolean
+      instance_pool_id:
+        type: string
+      idempotency_token:
+        type: string
+
   ClusterInfo:
     type: object
     properties:
@@ -546,3 +587,13 @@ definitions:
         $ref: '#/definitions/LogSyncStatus'
       termination_reason:
         $ref: '#/definitions/TerminationReason'
+
+  Error:
+    type: object
+    required:
+      - message
+    properties:
+      error_code:
+        type: string
+      message:
+        type: string
