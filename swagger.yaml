@@ -458,6 +458,7 @@ definitions:
     properties:
       num_workers:
         type: integer
+        format: int32
       autoscale:
         $ref: '#/definitions/AutoScale'
       cluster_name:
