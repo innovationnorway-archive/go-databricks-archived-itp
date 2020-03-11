@@ -218,6 +218,22 @@ paths:
         default:
           $ref: '#/responses/Error'
 
+  /clusters/list-node-types:
+    get:
+      operationId: listNodeTypes
+      tags: [clusters]
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/NodeType'
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
+
 definitions:
   AutoScale:
     type: object
@@ -588,6 +604,44 @@ definitions:
         $ref: '#/definitions/LogSyncStatus'
       termination_reason:
         $ref: '#/definitions/TerminationReason'
+
+  NodeType:
+    type: object
+    properties:
+      node_type_id:
+        type: string
+      memory_mb:
+        type: integer
+        format: int32
+      num_cores:
+        type: number
+        format: float
+      description:
+        type: string
+      instance_type_id:
+        type: string
+      is_deprecated:
+        type: boolean
+      node_info:
+        $ref: '#/definitions/ClusterCloudProviderNodeInfo'
+
+  ClusterCloudProviderNodeInfo:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/ClusterCloudProviderNodeStatus'
+      available_core_quota:
+        type: integer
+        format: int32
+      total_core_quota:
+        type: integer
+        format: int32
+
+  ClusterCloudProviderNodeStatus:
+    type: string
+    enum:
+      - NotEnabledOnSubscription
+      - NotAvailableInRegion
 
   Error:
     type: object
