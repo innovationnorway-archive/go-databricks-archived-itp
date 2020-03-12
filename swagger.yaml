@@ -645,10 +645,36 @@ definitions:
 
   Error:
     type: object
-    required:
-      - message
     properties:
       error_code:
-        type: string
+        $ref: '#/definitions/ErrorCode'
       message:
         type: string
+
+  ErrorCode:
+    type: string
+    enum:
+      - BAD_REQUEST 
+      - COULD_NOT_ACQUIRE_LOCK
+      - CUSTOMER_UNAUTHORIZED
+      - DIRECTORY_NOT_EMPTY
+      - DIRECTORY_PROTECTED
+      - DRY_RUN_FAILED
+      - ENDPOINT_NOT_FOUND
+      - FEATURE_DISABLED
+      - INTERNAL_ERROR
+      - INVALID_PARAMETER_VALUE
+      - INVALID_STATE
+      - INVALID_STATE_TRANSITION
+      - IO_ERROR
+      - MALFORMED_REQUEST
+      - MAX_BLOCK_SIZE_EXCEEDED
+      - MAX_NOTEBOOK_SIZE_EXCEEDED
+      - MAX_READ_SIZE_EXCEEDED
+      - PERMISSION_DENIED
+      - QUOTA_EXCEEDED
+      - REQUEST_LIMIT_EXCEEDED
+      - RESOURCE_ALREADY_EXISTS
+      - RESOURCE_DOES_NOT_EXIST
+      - RESOURCE_LIMIT_EXCEEDED
+      - TEMPORARILY_UNAVAILABLE
