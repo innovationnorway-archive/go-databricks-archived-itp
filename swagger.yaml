@@ -218,6 +218,26 @@ paths:
         default:
           $ref: '#/responses/Error'
 
+  /clusters/restart:
+    post:
+      operationId: restart
+      tags: [clusters]
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              cluster_id:
+                type: string
+      responses:
+        200:
+          description: OK
+        403:
+          $ref: '#/responses/InvalidAccessToken'
+        default:
+          $ref: '#/responses/Error'
+
   /clusters/list-node-types:
     get:
       operationId: listNodeTypes
