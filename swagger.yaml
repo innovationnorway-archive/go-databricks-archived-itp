@@ -17,13 +17,9 @@ produces:
 
 responses:
   Error:
-    description: error
+    description: Error
     schema:
       $ref: '#/definitions/Error'
-  InvalidAccessToken:
-    description: invalid access token
-    schema:
-      type: string
 
 securityDefinitions:
   token:
@@ -53,10 +49,12 @@ paths:
             properties:
               cluster_id:
                 type: string
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/get:
     get:
@@ -72,10 +70,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ClusterInfo'
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/edit:
     post:
@@ -132,10 +132,12 @@ paths:
       responses:
         200:
           description: OK
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/delete:
     post:
@@ -152,10 +154,12 @@ paths:
       responses:
         200:
           description: Terminated
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/list:
     get:
@@ -168,10 +172,12 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ClusterInfo'
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/permanent-delete:
     post:
@@ -188,10 +194,12 @@ paths:
       responses:
         200:
           description: Deleted
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/resize:
     post:
@@ -213,10 +221,12 @@ paths:
       responses:
         200:
           description: OK
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/restart:
     post:
@@ -233,10 +243,12 @@ paths:
       responses:
         200:
           description: OK
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
   /clusters/list-node-types:
     get:
@@ -249,10 +261,12 @@ paths:
             type: array
             items:
               $ref: '#/definitions/NodeType'
-        403:
-          $ref: '#/responses/InvalidAccessToken'
-        default:
+        400:
           $ref: '#/responses/Error'
+        default:
+          description: Default
+          schema:
+            type: string
 
 definitions:
   AutoScale:
