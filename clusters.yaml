@@ -1,0 +1,692 @@
+openapi: 3.0.0
+
+info:
+  title: Databricks Clusters API
+  description: Databricks REST API
+  version: 0.1.0
+
+servers:
+- url: /api/2.0
+
+paths:
+  /clusters/create:
+    post:
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterAttributes'
+        required: true
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCreateResult'
+
+  /clusters/get:
+    get:
+      operationId: get
+      parameters:
+      - name: cluster_id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterInfo'
+
+  /clusters/edit:
+    post:
+      operationId: edit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterEditAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+  /clusters/delete:
+    post:
+      operationId: delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterDeleteAttributes'
+        required: true
+      responses:
+        '200':
+          description: Terminated
+
+  /clusters/permanent-delete:
+    post:
+      operationId: permanentDelete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterPermanentDeleteAttributes'
+        required: true
+      responses:
+        '200':
+          description: Deleted
+
+  /clusters/list:
+    get:
+      operationId: list
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterInfo'
+
+  /clusters/resize:
+    post:
+      operationId: resize
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterResizeAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+  /clusters/restart:
+    post:
+      operationId: restart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterRestartAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+  /clusters/list-node-types:
+    get:
+      operationId: listNodeTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NodeType'
+
+components:
+  schemas:
+    AutoScale:
+      type: object
+      properties:
+        min_workers:
+          type: integer
+          format: int32
+        max_workers:
+          type: integer
+          format: int32
+      required:
+        - min_workers
+        - max_workers
+
+    SparkNode:
+      type: object
+      properties:
+        private_ip:
+          type: string
+        public_dns:
+          type: string
+        node_id:
+          type: string
+        instance_id:
+          type: string
+        start_timestamp:
+          type: integer
+          format: int64
+        node_aws_attributes:
+          $ref: '#/components/schemas/SparkNodeAwsAttributes'
+        host_private_ip:
+          type: string
+
+    SparkNodeAwsAttributes:
+      type: object
+      properties:
+        is_spot:
+          type: boolean
+
+    SparkConfPair:
+      type: object
+      additionalProperties:
+        type: string
+
+    AwsAttributes:
+      type: object
+      properties:
+        first_on_demand:
+          type: integer
+          format: int32
+        availability:
+          $ref: '#/components/schemas/AwsAvailability'
+        zone_id:
+          type: string
+        instance_profile_arn:
+          type: string
+        spot_bid_price_percent:
+          type: integer
+          format: int32
+        ebs_volume_type:
+          $ref: '#/components/schemas/EbsVolumeType'
+        ebs_volume_count:
+          type: integer
+          format: int32
+        ebs_volume_size:
+          type: integer
+          format: int32
+
+    AwsAvailability:
+      type: string
+      enum:
+      - SPOT
+      - ON_DEMAND
+      - SPOT_WITH_FALLBACK
+
+    EbsVolumeType:
+      type: string
+      enum:
+      - GENERAL_PURPOSE_SSD
+      - THROUGHPUT_OPTIMIZED_HDD
+
+    ClusterTag:
+      type: object
+      additionalProperties:
+        type: string
+
+    ClusterLogConf:
+      type: object
+      properties:
+        dbfs:
+          $ref: '#/components/schemas/DbfsStorageInfo'
+        s3:
+          $ref: '#/components/schemas/S3StorageInfo'
+
+    DbfsStorageInfo:
+      type: object
+      properties:
+        destination:
+          type: string
+
+    S3StorageInfo:
+      type: object
+      properties:
+        destination:
+          type: string
+        region:
+          type: string
+        endpoint:
+          type: string
+        enable_encryption:
+          type: boolean
+        encryption_type:
+          type: string
+        kms_key:
+          type: string
+        canned_acl:
+          type: string
+
+    InitScriptInfo:
+      type: object
+      properties:
+        dbfs:
+          $ref: '#/components/schemas/DbfsStorageInfo'
+        s3:
+          $ref: '#/components/schemas/S3StorageInfo'
+
+    DockerImage:
+      type: object
+      properties:
+        url:
+          type: string
+        basic_auth:
+          $ref: '#/components/schemas/DockerBasicAuth'
+
+    DockerBasicAuth:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    SparkEnvPair:
+      type: object
+      additionalProperties:
+        type: string
+
+    ClusterSource:
+      type: string
+      enum:
+      - UI
+      - JOB
+      - API
+
+    ClusterState:
+      type: string
+      enum:
+      - PENDING
+      - RUNNING
+      - RESTARTING
+      - RESIZING
+      - TERMINATING
+      - TERMINATED
+      - ERROR
+      - UNKNOWN
+
+    LogSyncStatus:
+      type: object
+      properties:
+        last_attempted:
+          type: integer
+          format: int64
+        last_exception:
+          type: string
+
+    TerminationReason:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/TerminationCode'
+        parameters:
+          $ref: '#/components/schemas/ParameterPair'
+
+    TerminationCode:
+      type: string
+      enum:
+      - USER_REQUEST
+      - JOB_FINISHED
+      - INACTIVITY
+      - CLOUD_PROVIDER_SHUTDOWN
+      - COMMUNICATION_LOST
+      - CLOUD_PROVIDER_LAUNCH_FAILURE
+      - SPARK_STARTUP_FAILURE
+      - INVALID_ARGUMENT
+      - UNEXPECTED_LAUNCH_FAILURE
+      - INTERNAL_ERROR
+      - SPARK_ERROR
+      - METASTORE_COMPONENT_UNHEALTHY
+      - DBFS_COMPONENT_UNHEALTHY
+      - DRIVER_UNREACHABLE
+      - DRIVER_UNRESPONSIVE
+      - INSTANCE_UNREACHABLE
+      - CONTAINER_LAUNCH_FAILURE
+      - INSTANCE_POOL_CLUSTER_FAILURE
+      - REQUEST_REJECTED
+      - INIT_SCRIPT_FAILURE
+      - TRIAL_EXPIRED
+
+    ParameterPair:
+      type: object
+      properties:
+        username:
+          type: string
+        aws_api_error_code:
+          type: string
+        aws_instance_state_reason:
+          type: string
+        aws_spot_request_status:
+          type: string
+        aws_spot_request_fault_code:
+          type: string
+        aws_impaired_status_details:
+          type: string
+        aws_instance_status_event:
+          type: string
+        aws_error_message:
+          type: string
+        databricks_error_message:
+          type: string
+        inactivity_duration_min:
+          type: string
+        instance_id:
+          type: string
+        instance_pool_id:
+          type: string
+        instance_pool_error_code:
+          type: string
+
+    ClusterAttributes:
+      type: object
+      properties:
+        num_workers:
+          type: integer
+          format: int32
+        autoscale:
+          $ref: '#/components/schemas/AutoScale'
+        cluster_name:
+          type: string
+        spark_version:
+          type: string
+        spark_conf:
+          $ref: '#/components/schemas/SparkConfPair'
+        aws_attributes:
+          $ref: '#/components/schemas/AwsAttributes'
+        node_type_id:
+          type: string
+        driver_node_type_id:
+          type: string
+        ssh_public_keys:
+          type: array
+          items:
+            type: string
+        custom_tags:
+          $ref: '#/components/schemas/ClusterTag'
+        cluster_log_conf:
+          $ref: '#/components/schemas/ClusterLogConf'
+        init_scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/InitScriptInfo'
+        docker_image:
+          $ref: '#/components/schemas/DockerImage'
+        spark_env_vars:
+          $ref: '#/components/schemas/SparkEnvPair'
+        autotermination_minutes:
+          type: integer
+          format: int32
+        enable_elastic_disk:
+          type: boolean
+        instance_pool_id:
+          type: string
+        idempotency_token:
+          type: string
+      required:
+        - spark_version
+        - node_type_id
+
+    ClusterInfo:
+      type: object
+      properties:
+        num_workers:
+          type: integer
+          format: int32
+        autoscale:
+          $ref: '#/components/schemas/AutoScale'
+        cluster_id:
+          type: string
+        creator_user_name:
+          type: string
+        driver:
+          $ref: '#/components/schemas/SparkNode'
+        executors:
+          type: array
+          items:
+            $ref: '#/components/schemas/SparkNode'
+        spark_context_id:
+          type: integer
+          format: int64
+        jdbc_port:
+          type: integer
+          format: int32
+        cluster_name:
+          type: string
+        spark_version:
+          type: string
+        spark_conf:
+          $ref: '#/components/schemas/SparkConfPair'
+        aws_attributes:
+          $ref: '#/components/schemas/AwsAttributes'
+        node_type_id:
+          type: string
+        driver_node_type_id:
+          type: string
+        ssh_public_keys:
+          type: array
+          items:
+            type: string
+        custom_tags:
+          $ref: '#/components/schemas/ClusterTag'
+        cluster_log_conf:
+          $ref: '#/components/schemas/ClusterLogConf'
+        init_scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/InitScriptInfo'
+        docker_image:
+          $ref: '#/components/schemas/DockerImage'
+        spark_env_vars:
+          $ref: '#/components/schemas/SparkEnvPair'
+        autotermination_minutes:
+          type: integer
+          format: int32
+        enable_elastic_disk:
+          type: boolean
+        instance_pool_id:
+          type: string
+        cluster_source:
+          $ref: '#/components/schemas/ClusterSource'
+        state:
+          $ref: '#/components/schemas/ClusterState'
+        state_message:
+          type: string
+        start_time:
+          type: integer
+          format: int64
+        terminated_time:
+          type: integer
+          format: int64
+        last_state_loss_time:
+          type: integer
+          format: int64
+        last_activity_time:
+          type: integer
+          format: int64
+        cluster_memory_mb:
+          type: integer
+          format: int64
+        cluster_cores:
+          type: number
+          format: float
+        default_tags:
+          $ref: '#/components/schemas/ClusterTag'
+        cluster_log_status:
+          $ref: '#/components/schemas/LogSyncStatus'
+        termination_reason:
+          $ref: '#/components/schemas/TerminationReason'
+
+    NodeType:
+      type: object
+      properties:
+        node_type_id:
+          type: string
+        memory_mb:
+          type: integer
+          format: int32
+        num_cores:
+          type: number
+          format: float
+        description:
+          type: string
+        instance_type_id:
+          type: string
+        is_deprecated:
+          type: boolean
+        node_info:
+          $ref: '#/components/schemas/ClusterCloudProviderNodeInfo'
+
+    ClusterCloudProviderNodeInfo:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ClusterCloudProviderNodeStatus'
+        available_core_quota:
+          type: integer
+          format: int32
+        total_core_quota:
+          type: integer
+          format: int32
+
+    ClusterCloudProviderNodeStatus:
+      type: string
+      enum:
+      - NotEnabledOnSubscription
+      - NotAvailableInRegion
+
+    Error:
+      type: object
+      properties:
+        error_code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          type: string
+      required:
+        - error_code
+        - message
+
+    ErrorCode:
+      type: string
+      enum:
+      - BAD_REQUEST
+      - COULD_NOT_ACQUIRE_LOCK
+      - CUSTOMER_UNAUTHORIZED
+      - DIRECTORY_NOT_EMPTY
+      - DIRECTORY_PROTECTED
+      - DRY_RUN_FAILED
+      - ENDPOINT_NOT_FOUND
+      - FEATURE_DISABLED
+      - INTERNAL_ERROR
+      - INVALID_PARAMETER_VALUE
+      - INVALID_STATE
+      - INVALID_STATE_TRANSITION
+      - IO_ERROR
+      - MALFORMED_REQUEST
+      - MAX_BLOCK_SIZE_EXCEEDED
+      - MAX_NOTEBOOK_SIZE_EXCEEDED
+      - MAX_READ_SIZE_EXCEEDED
+      - PERMISSION_DENIED
+      - QUOTA_EXCEEDED
+      - REQUEST_LIMIT_EXCEEDED
+      - RESOURCE_ALREADY_EXISTS
+      - RESOURCE_DOES_NOT_EXIST
+      - RESOURCE_LIMIT_EXCEEDED
+      - TEMPORARILY_UNAVAILABLE
+
+    ClusterCreateResult:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+
+    ClusterEditAttributes:
+      type: object
+      properties:
+        num_workers:
+          type: integer
+          format: int32
+        autoscale:
+          $ref: '#/components/schemas/AutoScale'
+        cluster_id:
+          type: string
+        cluster_name:
+          type: string
+        spark_version:
+          type: string
+        spark_conf:
+          $ref: '#/components/schemas/SparkConfPair'
+        aws_attributes:
+          $ref: '#/components/schemas/AwsAttributes'
+        node_type_id:
+          type: string
+        driver_node_type_id:
+          type: string
+        ssh_public_keys:
+          type: array
+          items:
+            type: string
+        custom_tags:
+          $ref: '#/components/schemas/ClusterTag'
+        cluster_log_conf:
+          $ref: '#/components/schemas/ClusterLogConf'
+        init_scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/InitScriptInfo'
+        docker_image:
+          $ref: '#/components/schemas/DockerImage'
+        spark_env_vars:
+          $ref: '#/components/schemas/SparkEnvPair'
+        autotermination_minutes:
+          type: integer
+          format: int32
+        enable_elastic_disk:
+          type: boolean
+        instance_pool_id:
+          type: string
+      required:
+        - spark_version
+        - node_type_id
+
+    ClusterResizeAttributes:
+      type: object
+      properties:
+        num_workers:
+          type: integer
+          format: int32
+        autoscale:
+          $ref: '#/components/schemas/AutoScale'
+        cluster_id:
+          type: string
+      required:
+        - cluster_id
+
+    ClusterDeleteAttributes:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+      required:
+        - cluster_id
+
+    ClusterPermanentDeleteAttributes:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+      required:
+        - cluster_id
+
+    ClusterRestartAttributes:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+      required:
+        - cluster_id
+
+  responses:
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
