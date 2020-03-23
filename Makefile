@@ -4,7 +4,7 @@ build:
 	go build ./...
 
 deps:
-	npm install autorest
+	npm install -g autorest
 
 generate:
 	autorest --v3 --input-file=clusters.yaml --go --output-folder=clusters --namespace=clusters --user-agent="go-databricks/clusters"
