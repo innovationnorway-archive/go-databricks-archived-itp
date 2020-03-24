@@ -16,14 +16,20 @@ $ go get github.com/innovationnorway/go-databricks/...
 
 ## Contributing
 
+Install [AutoRest](https://github.com/Azure/autorest):
+
+```
+$ npm install -g autorest
+```
+
 Validate specification:
 
 ```
-$ make validate
+$ autorest --input-file=clusters.yaml
 ```
 
 Generate API client:
 
 ```
-$ make generate
+$ autorest --clusters
 ```
