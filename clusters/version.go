@@ -7,7 +7,7 @@ package clusters
 
 // UserAgent returns the UserAgent string to use when sending http.Requests.
 func UserAgent() string {
-    return "go-databricks/clusters"
+    return "go-databricks/version clusters"
 }
 
 // Version returns the semantic version (see http://semver.org) of the client.

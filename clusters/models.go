@@ -9,7 +9,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "clusters"
+const fqdn = "github.com/innovationnorway/go-databricks/clusters"
 
         // Availability enumerates the values for availability.
     type Availability string

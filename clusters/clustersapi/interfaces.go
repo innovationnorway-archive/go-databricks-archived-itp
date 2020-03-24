@@ -5,7 +5,7 @@ package clustersapi
 
 import (
     "context"
-    "clusters"
+    "github.com/innovationnorway/go-databricks/clusters"
     "github.com/Azure/go-autorest/autorest"
 )
 
