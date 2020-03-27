@@ -97,6 +97,19 @@ paths:
         '200':
           description: OK
 
+  /groups/delete:
+    post:
+      operationId: delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
 components:
   schemas:
     MemberAttributes:
@@ -142,3 +155,9 @@ components:
           type: array
           items:
             type: string
+
+    DeleteAttributes:
+      type: object
+      properties:
+        group_name:
+          type: string

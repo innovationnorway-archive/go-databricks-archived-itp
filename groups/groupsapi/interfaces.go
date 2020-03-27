@@ -13,6 +13,7 @@ import (
         type BaseClientAPI interface {
             AddMember(ctx context.Context, body groups.MemberAttributes) (result autorest.Response, err error)
             Create(ctx context.Context, body groups.Attributes) (result groups.CreateResult, err error)
+            Delete(ctx context.Context, body groups.DeleteAttributes) (result autorest.Response, err error)
             List(ctx context.Context) (result groups.ListListResult, err error)
             ListMembers(ctx context.Context, groupName string) (result groups.ListPrincipalName, err error)
             ListParents(ctx context.Context) (result groups.ListListResult, err error)

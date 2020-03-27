@@ -176,6 +176,68 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
             return
         }
 
+    // Delete sends the delete request.
+    func (client BaseClient) Delete(ctx context.Context, body DeleteAttributes) (result autorest.Response, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.Delete")
+            defer func() {
+                sc := -1
+                if result.Response != nil {
+                    sc = result.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+            req, err := client.DeletePreparer(ctx, body)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "groups.BaseClient", "Delete", nil , "Failure preparing request")
+        return
+        }
+
+                resp, err := client.DeleteSender(req)
+                if err != nil {
+                result.Response = resp
+                err = autorest.NewErrorWithError(err, "groups.BaseClient", "Delete", resp, "Failure sending request")
+                return
+                }
+
+                result, err = client.DeleteResponder(resp)
+                if err != nil {
+                err = autorest.NewErrorWithError(err, "groups.BaseClient", "Delete", resp, "Failure responding to request")
+                }
+
+        return
+        }
+
+        // DeletePreparer prepares the Delete request.
+        func (client BaseClient) DeletePreparer(ctx context.Context, body DeleteAttributes) (*http.Request, error) {
+            preparer := autorest.CreatePreparer(
+        autorest.AsContentType("application/json; charset=utf-8"),
+        autorest.AsPost(),
+        autorest.WithBaseURL(client.BaseURI),
+        autorest.WithPath("/groups/delete"),
+        autorest.WithJSON(body))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
+
+        // DeleteSender sends the Delete request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) DeleteSender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                }
+
+    // DeleteResponder handles the response to the Delete request. The method always
+    // closes the http.Response Body.
+    func (client BaseClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
+        err = autorest.Respond(
+        resp,
+        client.ByInspecting(),
+        azure.WithErrorUnlessStatusCode(http.StatusOK),
+        autorest.ByClosing())
+        result.Response = resp
+            return
+        }
+
     // List sends the list request.
     func (client BaseClient) List(ctx context.Context) (result ListListResult, err error) {
         if tracing.IsEnabled() {

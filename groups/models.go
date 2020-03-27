@@ -22,6 +22,11 @@ const fqdn = "github.com/innovationnorway/go-databricks/groups"
             GroupName *string `json:"group_name,omitempty"`
             }
 
+            // DeleteAttributes ...
+            type DeleteAttributes struct {
+            GroupName *string `json:"group_name,omitempty"`
+            }
+
             // ListListResult ...
             type ListListResult struct {
             autorest.Response `json:"-"`
