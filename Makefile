@@ -1,4 +1,4 @@
-all: deps validate generate build test clean
+all: deps validate generate build test
 
 build:
 	go build ./...
@@ -8,9 +8,11 @@ deps:
 
 generate:
 	autorest --clusters
+	autorest --groups
 
 test:
 	go test ./...
 
 validate:
 	autorest --input-file=clusters.yaml
+	autorest --input-file=groups.yaml
