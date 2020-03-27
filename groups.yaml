@@ -1,0 +1,144 @@
+openapi: 3.0.0
+
+info:
+  title: Databricks Groups API
+  description: Databricks REST API
+  version: 0.1.0
+
+servers:
+- url: /api/2.0
+
+paths:
+  /groups/add-member:
+    post:
+      operationId: addMember
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+  /groups/create:
+    post:
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResult'
+
+  /clusters/list-members:
+    get:
+      operationId: listMembers
+      parameters:
+      - name: group_name
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrincipalName'
+
+  /clusters/list:
+    get:
+      operationId: list
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListResult'
+
+  /clusters/list-parents:
+    get:
+      operationId: listParents
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListResult'
+
+  /groups/remove-member:
+    post:
+      operationId: removeMember
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    MemberAttributes:
+      type: object
+      properties:
+        username:
+          type: string
+        group_name:
+          type: string
+        parent_name:
+          type: string
+      required:
+        - parent_name
+
+    GroupAttributes:
+      type: object
+      properties:
+        username:
+          type: string
+        group_name:
+          type: string
+      required:
+        - group_name
+
+    PrincipalName:
+      type: object
+      properties:
+        user_name:
+          type: string
+        group_name:
+          type: string
+
+    CreateResult:
+      type: object
+      properties:
+        group_name:
+          type: string
+
+    ListResult:
+      type: object
+      properties:
+        group_names:
+          type: array
+          items:
+            type: string
