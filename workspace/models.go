@@ -28,24 +28,6 @@ const fqdn = "github.com/innovationnorway/go-databricks/workspace"
         return []Format{DBC,HTML,JUPYTER,SOURCE}
     }
 
-        // Format1 enumerates the values for format 1.
-    type Format1 string
-
-    const (
-                // Format1DBC ...
-        Format1DBC Format1 = "DBC"
-                // Format1HTML ...
-        Format1HTML Format1 = "HTML"
-                // Format1JUPYTER ...
-        Format1JUPYTER Format1 = "JUPYTER"
-                // Format1SOURCE ...
-        Format1SOURCE Format1 = "SOURCE"
-            )
-    // PossibleFormat1Values returns an array of possible values for the Format1 const type.
-    func PossibleFormat1Values() []Format1 {
-        return []Format1{Format1DBC,Format1HTML,Format1JUPYTER,Format1SOURCE}
-    }
-
         // Language enumerates the values for language.
     type Language string
 
@@ -104,14 +86,6 @@ const fqdn = "github.com/innovationnorway/go-databricks/workspace"
             Recursive *bool `json:"recursive,omitempty"`
             }
 
-            // ExportAttributes ...
-            type ExportAttributes struct {
-            Path *string `json:"path,omitempty"`
-            // Format - Possible values include: 'SOURCE', 'HTML', 'JUPYTER', 'DBC'
-            Format Format `json:"format,omitempty"`
-            DirectDownload *bool `json:"direct_download,omitempty"`
-            }
-
             // ExportResult ...
             type ExportResult struct {
             autorest.Response `json:"-"`
@@ -121,8 +95,8 @@ const fqdn = "github.com/innovationnorway/go-databricks/workspace"
             // ImportAttributes ...
             type ImportAttributes struct {
             Path *string `json:"path,omitempty"`
-            // Format - Possible values include: 'Format1SOURCE', 'Format1HTML', 'Format1JUPYTER', 'Format1DBC'
-            Format Format1 `json:"format,omitempty"`
+            // Format - Possible values include: 'SOURCE', 'HTML', 'JUPYTER', 'DBC'
+            Format Format `json:"format,omitempty"`
             // Language - Possible values include: 'Language1SCALA', 'Language1PYTHON', 'Language1SQL', 'Language1R'
             Language Language1 `json:"language,omitempty"`
             Content *[]byte `json:"content,omitempty"`

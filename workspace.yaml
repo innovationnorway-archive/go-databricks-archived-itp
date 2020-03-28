@@ -156,18 +156,6 @@ components:
       required:
         - path
 
-    ExportAttributes:
-      type: object
-      properties:
-        path:
-          type: string
-        format:
-          $ref: '#/components/schemas/ExportFormat'
-        direct_download:
-          type: boolean
-      required:
-        - path
-
     ExportResult:
       type: object
       properties:
