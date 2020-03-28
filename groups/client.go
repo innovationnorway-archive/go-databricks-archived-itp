@@ -276,7 +276,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
             preparer := autorest.CreatePreparer(
         autorest.AsGet(),
         autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/clusters/list"))
+        autorest.WithPath("/groups/list"))
         return preparer.Prepare((&http.Request{}).WithContext(ctx))
         }
 
@@ -341,7 +341,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
             preparer := autorest.CreatePreparer(
         autorest.AsGet(),
         autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/clusters/list-members"),
+        autorest.WithPath("/groups/list-members"),
         autorest.WithQueryParameters(queryParameters))
         return preparer.Prepare((&http.Request{}).WithContext(ctx))
         }
@@ -403,7 +403,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
             preparer := autorest.CreatePreparer(
         autorest.AsGet(),
         autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/clusters/list-parents"))
+        autorest.WithPath("/groups/list-parents"))
         return preparer.Prepare((&http.Request{}).WithContext(ctx))
         }
 
