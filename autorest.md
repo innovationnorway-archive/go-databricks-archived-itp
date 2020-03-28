@@ -29,3 +29,15 @@ go:
   package-name: github.com/innovationnorway/go-databricks/groups
   user-agent: 'go-databricks/version groups'
 ```
+
+## Workspace
+
+``` yaml $(workspace)
+input-file: workspace.yaml
+
+go:
+  namespace: workspace
+  output-folder: workspace
+  package-name: github.com/innovationnorway/go-databricks/workspace
+  user-agent: 'go-databricks/version workspace'
+```

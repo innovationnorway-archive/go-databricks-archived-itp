@@ -9,6 +9,7 @@ deps:
 generate:
 	autorest --clusters
 	autorest --groups
+	autorest --workspace
 
 test:
 	go test ./...
@@ -16,3 +17,4 @@ test:
 validate:
 	autorest --input-file=clusters.yaml
 	autorest --input-file=groups.yaml
+	autorest --input-file=workspace.yaml

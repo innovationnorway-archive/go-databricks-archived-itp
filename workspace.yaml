@@ -1,0 +1,210 @@
+openapi: 3.0.0
+
+info:
+  title: Databricks Workspace API
+  description: Databricks REST API
+  version: 0.1.0
+
+servers:
+- url: /api/2.0
+
+paths:
+
+  /workspace/delete:
+    post:
+      operationId: delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteAttributes'
+        required: true
+      responses:
+        '200':
+          description: Deleted
+
+  /workspace/export:
+    get:
+      operationId: export
+      parameters:
+        - name: path
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          schema:
+            $ref: '#/components/schemas/ExportFormat'
+        - name: direct_download
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportResult'
+
+  /workspace/get-status:
+    get:
+      operationId: getStatus
+      parameters:
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectInfo'
+
+  /workspace/import:
+    post:
+      operationId: import
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+  /workspace/list:
+    get:
+      operationId: list
+      parameters:
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResult'
+
+  /workspace/mkdirs:
+    post:
+      operationId: mkdirs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MkdirsAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    ObjectInfo:
+      type: object
+      properties:
+        object_type:
+          $ref: '#/components/schemas/ObjectType'
+        object_id:
+          type: integer
+          format: int64
+        path:
+          type: string
+        language:
+          $ref: '#/components/schemas/Language'
+
+    ObjectType:
+      type: string
+      enum:
+      - NOTEBOOK
+      - DIRECTORY
+      - LIBRARY
+
+    ExportFormat:
+      type: string
+      enum:
+      - SOURCE
+      - HTML
+      - JUPYTER
+      - DBC
+
+    Language:
+      type: string
+      enum:
+      - SCALA
+      - PYTHON
+      - SQL
+      - R
+
+    DeleteAttributes:
+      type: object
+      properties:
+        path:
+          type: string
+        recursive:
+          type: boolean
+      required:
+        - path
+
+    ExportAttributes:
+      type: object
+      properties:
+        path:
+          type: string
+        format:
+          $ref: '#/components/schemas/ExportFormat'
+        direct_download:
+          type: boolean
+      required:
+        - path
+
+    ExportResult:
+      type: object
+      properties:
+        content:
+          type: string
+          format: byte
+
+    ImportAttributes:
+      type: object
+      properties:
+        path:
+          type: string
+        format:
+          $ref: '#/components/schemas/ExportFormat'
+        language:
+          $ref: '#/components/schemas/Language'
+        content:
+          type: string
+          format: byte
+        overwrite:
+          type: boolean
+      required:
+        - path
+
+    ListResult:
+      type: object
+      properties:
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectInfo'
+
+    MkdirsAttributes:
+      type: object
+      properties:
+        path:
+          type: string
+      required:
+        - path
+
