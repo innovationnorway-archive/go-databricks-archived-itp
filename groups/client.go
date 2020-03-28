@@ -300,7 +300,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // ListMembers sends the list members request.
-    func (client BaseClient) ListMembers(ctx context.Context, groupName string) (result ListPrincipalName, err error) {
+    func (client BaseClient) ListMembers(ctx context.Context, groupName string) (result ListMembersResult, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.ListMembers")
             defer func() {
@@ -354,12 +354,12 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
 
     // ListMembersResponder handles the response to the ListMembers request. The method always
     // closes the http.Response Body.
-    func (client BaseClient) ListMembersResponder(resp *http.Response) (result ListPrincipalName, err error) {
+    func (client BaseClient) ListMembersResponder(resp *http.Response) (result ListMembersResult, err error) {
         err = autorest.Respond(
         resp,
         client.ByInspecting(),
         azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByUnmarshallingJSON(&result.Value),
+        autorest.ByUnmarshallingJSON(&result),
         autorest.ByClosing())
         result.Response = autorest.Response{Response: resp}
             return

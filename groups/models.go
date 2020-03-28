@@ -33,10 +33,10 @@ const fqdn = "github.com/innovationnorway/go-databricks/groups"
             Value *[]ListResult `json:"value,omitempty"`
             }
 
-            // ListPrincipalName ...
-            type ListPrincipalName struct {
+            // ListMembersResult ...
+            type ListMembersResult struct {
             autorest.Response `json:"-"`
-            Value *[]PrincipalName `json:"value,omitempty"`
+            Members *[]PrincipalName `json:"members,omitempty"`
             }
 
             // ListResult ...
