@@ -39,7 +39,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateResult'
 
-  /clusters/list-members:
+  /groups/list-members:
     get:
       operationId: listMembers
       parameters:
@@ -58,7 +58,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/PrincipalName'
 
-  /clusters/list:
+  /groups/list:
     get:
       operationId: list
       responses:
@@ -71,7 +71,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ListResult'
 
-  /clusters/list-parents:
+  /groups/list-parents:
     get:
       operationId: listParents
       responses:
