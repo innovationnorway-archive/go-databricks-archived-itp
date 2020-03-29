@@ -16,7 +16,7 @@ import (
             Delete(ctx context.Context, body groups.DeleteAttributes) (result autorest.Response, err error)
             List(ctx context.Context) (result groups.ListListResult, err error)
             ListMembers(ctx context.Context, groupName string) (result groups.ListMembersResult, err error)
-            ListParents(ctx context.Context) (result groups.ListListResult, err error)
+            ListParents(ctx context.Context, groupName string, userName string) (result groups.ListListResult, err error)
             RemoveMember(ctx context.Context, body groups.MemberAttributes) (result autorest.Response, err error)
         }
 
