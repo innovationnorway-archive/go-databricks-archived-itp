@@ -65,9 +65,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ListResult'
+                $ref: '#/components/schemas/ListResult'
 
   /groups/list-parents:
     get:
@@ -87,9 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ListResult'
+                $ref: '#/components/schemas/ListResult'
 
   /groups/remove-member:
     post:

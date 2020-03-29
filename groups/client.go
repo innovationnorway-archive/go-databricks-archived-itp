@@ -239,7 +239,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // List sends the list request.
-    func (client BaseClient) List(ctx context.Context) (result ListListResult, err error) {
+    func (client BaseClient) List(ctx context.Context) (result ListResult, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.List")
             defer func() {
@@ -288,12 +288,12 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
 
     // ListResponder handles the response to the List request. The method always
     // closes the http.Response Body.
-    func (client BaseClient) ListResponder(resp *http.Response) (result ListListResult, err error) {
+    func (client BaseClient) ListResponder(resp *http.Response) (result ListResult, err error) {
         err = autorest.Respond(
         resp,
         client.ByInspecting(),
         azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByUnmarshallingJSON(&result.Value),
+        autorest.ByUnmarshallingJSON(&result),
         autorest.ByClosing())
         result.Response = autorest.Response{Response: resp}
             return
@@ -366,7 +366,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // ListParents sends the list parents request.
-    func (client BaseClient) ListParents(ctx context.Context, groupName string, userName string) (result ListListResult, err error) {
+    func (client BaseClient) ListParents(ctx context.Context, groupName string, userName string) (result ListResult, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.ListParents")
             defer func() {
@@ -425,12 +425,12 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
 
     // ListParentsResponder handles the response to the ListParents request. The method always
     // closes the http.Response Body.
-    func (client BaseClient) ListParentsResponder(resp *http.Response) (result ListListResult, err error) {
+    func (client BaseClient) ListParentsResponder(resp *http.Response) (result ListResult, err error) {
         err = autorest.Respond(
         resp,
         client.ByInspecting(),
         azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByUnmarshallingJSON(&result.Value),
+        autorest.ByUnmarshallingJSON(&result),
         autorest.ByClosing())
         result.Response = autorest.Response{Response: resp}
             return

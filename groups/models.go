@@ -26,12 +26,6 @@ const fqdn = "github.com/innovationnorway/go-databricks/groups"
             GroupName *string `json:"group_name,omitempty"`
             }
 
-            // ListListResult ...
-            type ListListResult struct {
-            autorest.Response `json:"-"`
-            Value *[]ListResult `json:"value,omitempty"`
-            }
-
             // ListMembersResult ...
             type ListMembersResult struct {
             autorest.Response `json:"-"`
@@ -40,6 +34,7 @@ const fqdn = "github.com/innovationnorway/go-databricks/groups"
 
             // ListResult ...
             type ListResult struct {
+            autorest.Response `json:"-"`
             GroupNames *[]string `json:"group_names,omitempty"`
             }
 
