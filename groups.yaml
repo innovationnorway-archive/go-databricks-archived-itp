@@ -122,7 +122,7 @@ components:
     MemberAttributes:
       type: object
       properties:
-        username:
+        user_name:
           type: string
         group_name:
           type: string
@@ -134,8 +134,6 @@ components:
     GroupAttributes:
       type: object
       properties:
-        username:
-          type: string
         group_name:
           type: string
       required:
