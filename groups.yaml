@@ -72,6 +72,15 @@ paths:
   /groups/list-parents:
     get:
       operationId: listParents
+      parameters:
+      - name: group_name
+        in: query
+        schema:
+          type: string
+      - name: user_name
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: OK

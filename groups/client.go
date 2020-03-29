@@ -366,7 +366,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // ListParents sends the list parents request.
-    func (client BaseClient) ListParents(ctx context.Context) (result ListListResult, err error) {
+    func (client BaseClient) ListParents(ctx context.Context, groupName string, userName string) (result ListListResult, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.ListParents")
             defer func() {
@@ -377,7 +377,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
                 tracing.EndSpan(ctx, sc, err)
             }()
         }
-            req, err := client.ListParentsPreparer(ctx)
+            req, err := client.ListParentsPreparer(ctx, groupName, userName)
         if err != nil {
         err = autorest.NewErrorWithError(err, "groups.BaseClient", "ListParents", nil , "Failure preparing request")
         return
@@ -399,11 +399,21 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // ListParentsPreparer prepares the ListParents request.
-        func (client BaseClient) ListParentsPreparer(ctx context.Context) (*http.Request, error) {
+        func (client BaseClient) ListParentsPreparer(ctx context.Context, groupName string, userName string) (*http.Request, error) {
+                    queryParameters := map[string]interface{} {
+            }
+                if len(groupName) > 0 {
+                queryParameters["group_name"] = autorest.Encode("query",groupName)
+                }
+                if len(userName) > 0 {
+                queryParameters["user_name"] = autorest.Encode("query",userName)
+                }
+
             preparer := autorest.CreatePreparer(
         autorest.AsGet(),
         autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/groups/list-parents"))
+        autorest.WithPath("/groups/list-parents"),
+        autorest.WithQueryParameters(queryParameters))
         return preparer.Prepare((&http.Request{}).WithContext(ctx))
         }
 
