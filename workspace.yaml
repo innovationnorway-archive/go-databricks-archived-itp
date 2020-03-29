@@ -121,7 +121,7 @@ components:
         path:
           type: string
         language:
-          $ref: '#/components/schemas/Language'
+          type: string
 
     ObjectType:
       type: string
@@ -161,7 +161,6 @@ components:
       properties:
         content:
           type: string
-          format: byte
 
     ImportAttributes:
       type: object
@@ -174,7 +173,6 @@ components:
           $ref: '#/components/schemas/Language'
         content:
           type: string
-          format: byte
         overwrite:
           type: boolean
       required:

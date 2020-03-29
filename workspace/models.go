@@ -46,24 +46,6 @@ const fqdn = "github.com/innovationnorway/go-databricks/workspace"
         return []Language{PYTHON,R,SCALA,SQL}
     }
 
-        // Language1 enumerates the values for language 1.
-    type Language1 string
-
-    const (
-                // Language1PYTHON ...
-        Language1PYTHON Language1 = "PYTHON"
-                // Language1R ...
-        Language1R Language1 = "R"
-                // Language1SCALA ...
-        Language1SCALA Language1 = "SCALA"
-                // Language1SQL ...
-        Language1SQL Language1 = "SQL"
-            )
-    // PossibleLanguage1Values returns an array of possible values for the Language1 const type.
-    func PossibleLanguage1Values() []Language1 {
-        return []Language1{Language1PYTHON,Language1R,Language1SCALA,Language1SQL}
-    }
-
         // ObjectType enumerates the values for object type.
     type ObjectType string
 
@@ -89,7 +71,7 @@ const fqdn = "github.com/innovationnorway/go-databricks/workspace"
             // ExportResult ...
             type ExportResult struct {
             autorest.Response `json:"-"`
-            Content *[]byte `json:"content,omitempty"`
+            Content *string `json:"content,omitempty"`
             }
 
             // ImportAttributes ...
@@ -97,9 +79,9 @@ const fqdn = "github.com/innovationnorway/go-databricks/workspace"
             Path *string `json:"path,omitempty"`
             // Format - Possible values include: 'SOURCE', 'HTML', 'JUPYTER', 'DBC'
             Format Format `json:"format,omitempty"`
-            // Language - Possible values include: 'Language1SCALA', 'Language1PYTHON', 'Language1SQL', 'Language1R'
-            Language Language1 `json:"language,omitempty"`
-            Content *[]byte `json:"content,omitempty"`
+            // Language - Possible values include: 'SCALA', 'PYTHON', 'SQL', 'R'
+            Language Language `json:"language,omitempty"`
+            Content *string `json:"content,omitempty"`
             Overwrite *bool `json:"overwrite,omitempty"`
             }
 
@@ -121,7 +103,6 @@ const fqdn = "github.com/innovationnorway/go-databricks/workspace"
             ObjectType ObjectType `json:"object_type,omitempty"`
             ObjectID *int64 `json:"object_id,omitempty"`
             Path *string `json:"path,omitempty"`
-            // Language - Possible values include: 'SCALA', 'PYTHON', 'SQL', 'R'
-            Language Language `json:"language,omitempty"`
+            Language *string `json:"language,omitempty"`
             }
 
