@@ -12,7 +12,6 @@ const fqdn = "github.com/innovationnorway/go-databricks/groups"
 
             // Attributes ...
             type Attributes struct {
-            Username *string `json:"username,omitempty"`
             GroupName *string `json:"group_name,omitempty"`
             }
 
@@ -46,7 +45,7 @@ const fqdn = "github.com/innovationnorway/go-databricks/groups"
 
             // MemberAttributes ...
             type MemberAttributes struct {
-            Username *string `json:"username,omitempty"`
+            UserName *string `json:"user_name,omitempty"`
             GroupName *string `json:"group_name,omitempty"`
             ParentName *string `json:"parent_name,omitempty"`
             }
