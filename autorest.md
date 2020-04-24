@@ -41,3 +41,15 @@ go:
   package-name: github.com/innovationnorway/go-databricks/workspace
   user-agent: 'go-databricks/version workspace'
 ```
+
+## Secrets
+
+``` yaml $(secrets)
+input-file: secrets.yaml
+
+go:
+  namespace: secrets
+  output-folder: secrets
+  package-name: github.com/innovationnorway/go-databricks/secrets
+  user-agent: 'go-databricks/version secrets'
+```
