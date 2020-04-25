@@ -16,7 +16,8 @@ test:
 	go test ./...
 
 validate:
-	autorest --input-file=clusters.yaml
-	autorest --input-file=dbfs.yaml
-	autorest --input-file=groups.yaml
-	autorest --input-file=workspace.yaml
+	autorest \
+	  --input-file=clusters.yaml \
+	  --input-file=dbfs.yaml \
+	  --input-file=groups.yaml \
+	  --input-file=workspace.yaml
