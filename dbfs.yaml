@@ -1,0 +1,107 @@
+openapi: 3.0.0
+
+info:
+  title: Databricks DBFS API
+  description: Databricks REST API
+  version: 0.1.0
+
+servers:
+- url: /api/2.0
+
+paths:
+  /dbfs/delete:
+    post:
+      operationId: delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+  /dbfs/get-status:
+    get:
+      operationId: getStatus
+      parameters:
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatusResult'
+
+  /dbfs/mkdirs:
+    post:
+      operationId: mkdirs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MkdirsAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+  /dbfs/put:
+    post:
+      operationId: put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutAttributes'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    DeleteAttributes:
+      type: object
+      properties:
+        path:
+          type: string
+        recursive:
+          type: boolean
+      required:
+        - path
+
+    GetStatusResult:
+      type: object
+      properties:
+        path:
+          type: string
+        is_dir:
+          type: boolean
+        file_size:
+          type: integer
+          format: int64
+
+    MkdirsAttributes:
+      type: object
+      properties:
+        path:
+          type: string
+
+    PutAttributes:
+      type: object
+      properties:
+        path:
+          type: string
+        contents:
+          type: string
+        overwrite:
+          type: boolean
+      required:
+        - path
