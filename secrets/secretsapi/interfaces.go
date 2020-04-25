@@ -11,14 +11,14 @@ import (
 
         // BaseClientAPI contains the set of methods on the BaseClient type.
         type BaseClientAPI interface {
-            AclsDelete(ctx context.Context, body secrets.AclsRequest) (result autorest.Response, err error)
-            AclsGet(ctx context.Context, body secrets.AclsRequest) (result secrets.AclsResult, err error)
-            AclsList(ctx context.Context, body secrets.ListSecretsAclsRequest) (result secrets.ListSecretsAclsResult, err error)
-            AclsPut(ctx context.Context, body secrets.PutSecretACLRequest) (result autorest.Response, err error)
             CreateScope(ctx context.Context, body secrets.CreateScopeRequest) (result autorest.Response, err error)
             Delete(ctx context.Context, body secrets.Request) (result autorest.Response, err error)
+            DeleteAcls(ctx context.Context, body secrets.AclsRequest) (result autorest.Response, err error)
             DeleteScope(ctx context.Context, body secrets.DeleteScopeRequest) (result autorest.Response, err error)
+            GetAcls(ctx context.Context, body secrets.AclsRequest) (result secrets.AclsResult, err error)
             List(ctx context.Context, body secrets.ListSecretsRequest) (result secrets.ListResult, err error)
+            ListAcls(ctx context.Context, body secrets.PutSecretACLRequest) (result autorest.Response, err error)
+            ListAcls1(ctx context.Context, body secrets.ListSecretsAclsRequest) (result secrets.ListSecretsAclsResult, err error)
             ListScopes(ctx context.Context) (result secrets.ListScopesResult, err error)
             Put(ctx context.Context, body secrets.Request) (result autorest.Response, err error)
         }

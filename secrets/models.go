@@ -105,7 +105,7 @@ const fqdn = "github.com/innovationnorway/go-databricks/secrets"
             // ListResult ...
             type ListResult struct {
             autorest.Response `json:"-"`
-            Scopes *[]MetadataAttribute `json:"scopes,omitempty"`
+            SecretsProperty *[]MetadataAttributes `json:"secrets,omitempty"`
             }
 
             // ListScopesResult ...
@@ -130,8 +130,8 @@ const fqdn = "github.com/innovationnorway/go-databricks/secrets"
             Scope *string `json:"scope,omitempty"`
             }
 
-            // MetadataAttribute ...
-            type MetadataAttribute struct {
+            // MetadataAttributes ...
+            type MetadataAttributes struct {
             Key *string `json:"key,omitempty"`
             LastUpdatedTimestamp *int64 `json:"last_updated_timestamp,omitempty"`
             }

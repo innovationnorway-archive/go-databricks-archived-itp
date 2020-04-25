@@ -39,277 +39,6 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
     }
 }
 
-    // AclsDelete sends the acls delete request.
-    func (client BaseClient) AclsDelete(ctx context.Context, body AclsRequest) (result autorest.Response, err error) {
-        if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.AclsDelete")
-            defer func() {
-                sc := -1
-                if result.Response != nil {
-                    sc = result.Response.StatusCode
-                }
-                tracing.EndSpan(ctx, sc, err)
-            }()
-        }
-                if err := validation.Validate([]validation.Validation{
-                { TargetValue: body,
-                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
-                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
-                return result, validation.NewError("secrets.BaseClient", "AclsDelete", err.Error())
-                }
-
-                    req, err := client.AclsDeletePreparer(ctx, body)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsDelete", nil , "Failure preparing request")
-        return
-        }
-
-                resp, err := client.AclsDeleteSender(req)
-                if err != nil {
-                result.Response = resp
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsDelete", resp, "Failure sending request")
-                return
-                }
-
-                result, err = client.AclsDeleteResponder(resp)
-                if err != nil {
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsDelete", resp, "Failure responding to request")
-                }
-
-        return
-        }
-
-        // AclsDeletePreparer prepares the AclsDelete request.
-        func (client BaseClient) AclsDeletePreparer(ctx context.Context, body AclsRequest) (*http.Request, error) {
-            preparer := autorest.CreatePreparer(
-        autorest.AsContentType("application/json; charset=utf-8"),
-        autorest.AsPost(),
-        autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/secrets/acls/delete"),
-        autorest.WithJSON(body))
-        return preparer.Prepare((&http.Request{}).WithContext(ctx))
-        }
-
-        // AclsDeleteSender sends the AclsDelete request. The method will close the
-        // http.Response Body if it receives an error.
-        func (client BaseClient) AclsDeleteSender(req *http.Request) (*http.Response, error) {
-                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-                }
-
-    // AclsDeleteResponder handles the response to the AclsDelete request. The method always
-    // closes the http.Response Body.
-    func (client BaseClient) AclsDeleteResponder(resp *http.Response) (result autorest.Response, err error) {
-        err = autorest.Respond(
-        resp,
-        client.ByInspecting(),
-        azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByClosing())
-        result.Response = resp
-            return
-        }
-
-    // AclsGet sends the acls get request.
-    func (client BaseClient) AclsGet(ctx context.Context, body AclsRequest) (result AclsResult, err error) {
-        if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.AclsGet")
-            defer func() {
-                sc := -1
-                if result.Response.Response != nil {
-                    sc = result.Response.Response.StatusCode
-                }
-                tracing.EndSpan(ctx, sc, err)
-            }()
-        }
-                if err := validation.Validate([]validation.Validation{
-                { TargetValue: body,
-                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
-                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
-                return result, validation.NewError("secrets.BaseClient", "AclsGet", err.Error())
-                }
-
-                    req, err := client.AclsGetPreparer(ctx, body)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsGet", nil , "Failure preparing request")
-        return
-        }
-
-                resp, err := client.AclsGetSender(req)
-                if err != nil {
-                result.Response = autorest.Response{Response: resp}
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsGet", resp, "Failure sending request")
-                return
-                }
-
-                result, err = client.AclsGetResponder(resp)
-                if err != nil {
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsGet", resp, "Failure responding to request")
-                }
-
-        return
-        }
-
-        // AclsGetPreparer prepares the AclsGet request.
-        func (client BaseClient) AclsGetPreparer(ctx context.Context, body AclsRequest) (*http.Request, error) {
-            preparer := autorest.CreatePreparer(
-        autorest.AsContentType("application/json; charset=utf-8"),
-        autorest.AsPost(),
-        autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/secrets/acls/get"),
-        autorest.WithJSON(body))
-        return preparer.Prepare((&http.Request{}).WithContext(ctx))
-        }
-
-        // AclsGetSender sends the AclsGet request. The method will close the
-        // http.Response Body if it receives an error.
-        func (client BaseClient) AclsGetSender(req *http.Request) (*http.Response, error) {
-                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-                }
-
-    // AclsGetResponder handles the response to the AclsGet request. The method always
-    // closes the http.Response Body.
-    func (client BaseClient) AclsGetResponder(resp *http.Response) (result AclsResult, err error) {
-        err = autorest.Respond(
-        resp,
-        client.ByInspecting(),
-        azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByUnmarshallingJSON(&result),
-        autorest.ByClosing())
-        result.Response = autorest.Response{Response: resp}
-            return
-        }
-
-    // AclsList sends the acls list request.
-    func (client BaseClient) AclsList(ctx context.Context, body ListSecretsAclsRequest) (result ListSecretsAclsResult, err error) {
-        if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.AclsList")
-            defer func() {
-                sc := -1
-                if result.Response.Response != nil {
-                    sc = result.Response.Response.StatusCode
-                }
-                tracing.EndSpan(ctx, sc, err)
-            }()
-        }
-            req, err := client.AclsListPreparer(ctx, body)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsList", nil , "Failure preparing request")
-        return
-        }
-
-                resp, err := client.AclsListSender(req)
-                if err != nil {
-                result.Response = autorest.Response{Response: resp}
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsList", resp, "Failure sending request")
-                return
-                }
-
-                result, err = client.AclsListResponder(resp)
-                if err != nil {
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsList", resp, "Failure responding to request")
-                }
-
-        return
-        }
-
-        // AclsListPreparer prepares the AclsList request.
-        func (client BaseClient) AclsListPreparer(ctx context.Context, body ListSecretsAclsRequest) (*http.Request, error) {
-            preparer := autorest.CreatePreparer(
-        autorest.AsContentType("application/json; charset=utf-8"),
-        autorest.AsGet(),
-        autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/secrets/acls/list"),
-        autorest.WithJSON(body))
-        return preparer.Prepare((&http.Request{}).WithContext(ctx))
-        }
-
-        // AclsListSender sends the AclsList request. The method will close the
-        // http.Response Body if it receives an error.
-        func (client BaseClient) AclsListSender(req *http.Request) (*http.Response, error) {
-                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-                }
-
-    // AclsListResponder handles the response to the AclsList request. The method always
-    // closes the http.Response Body.
-    func (client BaseClient) AclsListResponder(resp *http.Response) (result ListSecretsAclsResult, err error) {
-        err = autorest.Respond(
-        resp,
-        client.ByInspecting(),
-        azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByUnmarshallingJSON(&result),
-        autorest.ByClosing())
-        result.Response = autorest.Response{Response: resp}
-            return
-        }
-
-    // AclsPut sends the acls put request.
-    func (client BaseClient) AclsPut(ctx context.Context, body PutSecretACLRequest) (result autorest.Response, err error) {
-        if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.AclsPut")
-            defer func() {
-                sc := -1
-                if result.Response != nil {
-                    sc = result.Response.StatusCode
-                }
-                tracing.EndSpan(ctx, sc, err)
-            }()
-        }
-                if err := validation.Validate([]validation.Validation{
-                { TargetValue: body,
-                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
-                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
-                return result, validation.NewError("secrets.BaseClient", "AclsPut", err.Error())
-                }
-
-                    req, err := client.AclsPutPreparer(ctx, body)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsPut", nil , "Failure preparing request")
-        return
-        }
-
-                resp, err := client.AclsPutSender(req)
-                if err != nil {
-                result.Response = resp
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsPut", resp, "Failure sending request")
-                return
-                }
-
-                result, err = client.AclsPutResponder(resp)
-                if err != nil {
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "AclsPut", resp, "Failure responding to request")
-                }
-
-        return
-        }
-
-        // AclsPutPreparer prepares the AclsPut request.
-        func (client BaseClient) AclsPutPreparer(ctx context.Context, body PutSecretACLRequest) (*http.Request, error) {
-            preparer := autorest.CreatePreparer(
-        autorest.AsContentType("application/json; charset=utf-8"),
-        autorest.AsPost(),
-        autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/secrets/acls/put"),
-        autorest.WithJSON(body))
-        return preparer.Prepare((&http.Request{}).WithContext(ctx))
-        }
-
-        // AclsPutSender sends the AclsPut request. The method will close the
-        // http.Response Body if it receives an error.
-        func (client BaseClient) AclsPutSender(req *http.Request) (*http.Response, error) {
-                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-                }
-
-    // AclsPutResponder handles the response to the AclsPut request. The method always
-    // closes the http.Response Body.
-    func (client BaseClient) AclsPutResponder(resp *http.Response) (result autorest.Response, err error) {
-        err = autorest.Respond(
-        resp,
-        client.ByInspecting(),
-        azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByClosing())
-        result.Response = resp
-            return
-        }
-
     // CreateScope sends the create scope request.
     func (client BaseClient) CreateScope(ctx context.Context, body CreateScopeRequest) (result autorest.Response, err error) {
         if tracing.IsEnabled() {
@@ -447,6 +176,75 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
             return
         }
 
+    // DeleteAcls sends the delete acls request.
+    func (client BaseClient) DeleteAcls(ctx context.Context, body AclsRequest) (result autorest.Response, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.DeleteAcls")
+            defer func() {
+                sc := -1
+                if result.Response != nil {
+                    sc = result.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+                if err := validation.Validate([]validation.Validation{
+                { TargetValue: body,
+                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
+                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+                return result, validation.NewError("secrets.BaseClient", "DeleteAcls", err.Error())
+                }
+
+                    req, err := client.DeleteAclsPreparer(ctx, body)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "DeleteAcls", nil , "Failure preparing request")
+        return
+        }
+
+                resp, err := client.DeleteAclsSender(req)
+                if err != nil {
+                result.Response = resp
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "DeleteAcls", resp, "Failure sending request")
+                return
+                }
+
+                result, err = client.DeleteAclsResponder(resp)
+                if err != nil {
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "DeleteAcls", resp, "Failure responding to request")
+                }
+
+        return
+        }
+
+        // DeleteAclsPreparer prepares the DeleteAcls request.
+        func (client BaseClient) DeleteAclsPreparer(ctx context.Context, body AclsRequest) (*http.Request, error) {
+            preparer := autorest.CreatePreparer(
+        autorest.AsContentType("application/json; charset=utf-8"),
+        autorest.AsPost(),
+        autorest.WithBaseURL(client.BaseURI),
+        autorest.WithPath("/secrets/acls/delete"),
+        autorest.WithJSON(body))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
+
+        // DeleteAclsSender sends the DeleteAcls request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) DeleteAclsSender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                }
+
+    // DeleteAclsResponder handles the response to the DeleteAcls request. The method always
+    // closes the http.Response Body.
+    func (client BaseClient) DeleteAclsResponder(resp *http.Response) (result autorest.Response, err error) {
+        err = autorest.Respond(
+        resp,
+        client.ByInspecting(),
+        azure.WithErrorUnlessStatusCode(http.StatusOK),
+        autorest.ByClosing())
+        result.Response = resp
+            return
+        }
+
     // DeleteScope sends the delete scope request.
     func (client BaseClient) DeleteScope(ctx context.Context, body DeleteScopeRequest) (result autorest.Response, err error) {
         if tracing.IsEnabled() {
@@ -515,6 +313,76 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
             return
         }
 
+    // GetAcls sends the get acls request.
+    func (client BaseClient) GetAcls(ctx context.Context, body AclsRequest) (result AclsResult, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.GetAcls")
+            defer func() {
+                sc := -1
+                if result.Response.Response != nil {
+                    sc = result.Response.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+                if err := validation.Validate([]validation.Validation{
+                { TargetValue: body,
+                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
+                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+                return result, validation.NewError("secrets.BaseClient", "GetAcls", err.Error())
+                }
+
+                    req, err := client.GetAclsPreparer(ctx, body)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "GetAcls", nil , "Failure preparing request")
+        return
+        }
+
+                resp, err := client.GetAclsSender(req)
+                if err != nil {
+                result.Response = autorest.Response{Response: resp}
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "GetAcls", resp, "Failure sending request")
+                return
+                }
+
+                result, err = client.GetAclsResponder(resp)
+                if err != nil {
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "GetAcls", resp, "Failure responding to request")
+                }
+
+        return
+        }
+
+        // GetAclsPreparer prepares the GetAcls request.
+        func (client BaseClient) GetAclsPreparer(ctx context.Context, body AclsRequest) (*http.Request, error) {
+            preparer := autorest.CreatePreparer(
+        autorest.AsContentType("application/json; charset=utf-8"),
+        autorest.AsPost(),
+        autorest.WithBaseURL(client.BaseURI),
+        autorest.WithPath("/secrets/acls/get"),
+        autorest.WithJSON(body))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
+
+        // GetAclsSender sends the GetAcls request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) GetAclsSender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                }
+
+    // GetAclsResponder handles the response to the GetAcls request. The method always
+    // closes the http.Response Body.
+    func (client BaseClient) GetAclsResponder(resp *http.Response) (result AclsResult, err error) {
+        err = autorest.Respond(
+        resp,
+        client.ByInspecting(),
+        azure.WithErrorUnlessStatusCode(http.StatusOK),
+        autorest.ByUnmarshallingJSON(&result),
+        autorest.ByClosing())
+        result.Response = autorest.Response{Response: resp}
+            return
+        }
+
     // List sends the list request.
     func (client BaseClient) List(ctx context.Context, body ListSecretsRequest) (result ListResult, err error) {
         if tracing.IsEnabled() {
@@ -574,6 +442,138 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
     // ListResponder handles the response to the List request. The method always
     // closes the http.Response Body.
     func (client BaseClient) ListResponder(resp *http.Response) (result ListResult, err error) {
+        err = autorest.Respond(
+        resp,
+        client.ByInspecting(),
+        azure.WithErrorUnlessStatusCode(http.StatusOK),
+        autorest.ByUnmarshallingJSON(&result),
+        autorest.ByClosing())
+        result.Response = autorest.Response{Response: resp}
+            return
+        }
+
+    // ListAcls sends the list acls request.
+    func (client BaseClient) ListAcls(ctx context.Context, body PutSecretACLRequest) (result autorest.Response, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.ListAcls")
+            defer func() {
+                sc := -1
+                if result.Response != nil {
+                    sc = result.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+                if err := validation.Validate([]validation.Validation{
+                { TargetValue: body,
+                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
+                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+                return result, validation.NewError("secrets.BaseClient", "ListAcls", err.Error())
+                }
+
+                    req, err := client.ListAclsPreparer(ctx, body)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls", nil , "Failure preparing request")
+        return
+        }
+
+                resp, err := client.ListAclsSender(req)
+                if err != nil {
+                result.Response = resp
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls", resp, "Failure sending request")
+                return
+                }
+
+                result, err = client.ListAclsResponder(resp)
+                if err != nil {
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls", resp, "Failure responding to request")
+                }
+
+        return
+        }
+
+        // ListAclsPreparer prepares the ListAcls request.
+        func (client BaseClient) ListAclsPreparer(ctx context.Context, body PutSecretACLRequest) (*http.Request, error) {
+            preparer := autorest.CreatePreparer(
+        autorest.AsContentType("application/json; charset=utf-8"),
+        autorest.AsPost(),
+        autorest.WithBaseURL(client.BaseURI),
+        autorest.WithPath("/secrets/acls/put"),
+        autorest.WithJSON(body))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
+
+        // ListAclsSender sends the ListAcls request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) ListAclsSender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                }
+
+    // ListAclsResponder handles the response to the ListAcls request. The method always
+    // closes the http.Response Body.
+    func (client BaseClient) ListAclsResponder(resp *http.Response) (result autorest.Response, err error) {
+        err = autorest.Respond(
+        resp,
+        client.ByInspecting(),
+        azure.WithErrorUnlessStatusCode(http.StatusOK),
+        autorest.ByClosing())
+        result.Response = resp
+            return
+        }
+
+    // ListAcls1 sends the list acls 1 request.
+    func (client BaseClient) ListAcls1(ctx context.Context, body ListSecretsAclsRequest) (result ListSecretsAclsResult, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.ListAcls1")
+            defer func() {
+                sc := -1
+                if result.Response.Response != nil {
+                    sc = result.Response.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+            req, err := client.ListAcls1Preparer(ctx, body)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls1", nil , "Failure preparing request")
+        return
+        }
+
+                resp, err := client.ListAcls1Sender(req)
+                if err != nil {
+                result.Response = autorest.Response{Response: resp}
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls1", resp, "Failure sending request")
+                return
+                }
+
+                result, err = client.ListAcls1Responder(resp)
+                if err != nil {
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls1", resp, "Failure responding to request")
+                }
+
+        return
+        }
+
+        // ListAcls1Preparer prepares the ListAcls1 request.
+        func (client BaseClient) ListAcls1Preparer(ctx context.Context, body ListSecretsAclsRequest) (*http.Request, error) {
+            preparer := autorest.CreatePreparer(
+        autorest.AsContentType("application/json; charset=utf-8"),
+        autorest.AsGet(),
+        autorest.WithBaseURL(client.BaseURI),
+        autorest.WithPath("/secrets/acls/list"),
+        autorest.WithJSON(body))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
+
+        // ListAcls1Sender sends the ListAcls1 request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) ListAcls1Sender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                }
+
+    // ListAcls1Responder handles the response to the ListAcls1 request. The method always
+    // closes the http.Response Body.
+    func (client BaseClient) ListAcls1Responder(resp *http.Response) (result ListSecretsAclsResult, err error) {
         err = autorest.Respond(
         resp,
         client.ByInspecting(),
