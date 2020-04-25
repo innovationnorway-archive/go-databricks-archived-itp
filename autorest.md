@@ -18,6 +18,18 @@ go:
   user-agent: 'go-databricks/version clusters'
 ```
 
+## DBFS
+
+``` yaml $(dbfs)
+input-file: dbfs.yaml
+
+go:
+  namespace: dbfs
+  output-folder: dbfs
+  package-name: github.com/innovationnorway/go-databricks/dbfs
+  user-agent: 'go-databricks/version dbfs'
+```
+
 ## Groups
 
 ``` yaml $(groups)
