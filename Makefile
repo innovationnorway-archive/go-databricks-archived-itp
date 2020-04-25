@@ -8,6 +8,7 @@ deps:
 
 generate:
 	autorest --clusters
+	autorest --dbfs
 	autorest --groups
 	autorest --workspace
 
@@ -16,5 +17,6 @@ test:
 
 validate:
 	autorest --input-file=clusters.yaml
+	autorest --input-file=dbfs.yaml
 	autorest --input-file=groups.yaml
 	autorest --input-file=workspace.yaml
