@@ -70,15 +70,15 @@ const fqdn = "github.com/innovationnorway/go-databricks/secrets"
         return []Permission2{Permission2MANAGE,Permission2READ,Permission2WRITE}
     }
 
-            // ACLItemAttribute ...
-            type ACLItemAttribute struct {
+            // ACLItemAttributes ...
+            type ACLItemAttributes struct {
             Principal *string `json:"principal,omitempty"`
             // Permission - Possible values include: 'Permission2READ', 'Permission2WRITE', 'Permission2MANAGE'
             Permission Permission2 `json:"permission,omitempty"`
             }
 
-            // AclsRequest ...
-            type AclsRequest struct {
+            // AclsAttributes ...
+            type AclsAttributes struct {
             Scope *string `json:"scope,omitempty"`
             Principal *string `json:"principal,omitempty"`
             }
@@ -91,14 +91,22 @@ const fqdn = "github.com/innovationnorway/go-databricks/secrets"
             Permission Permission1 `json:"permission,omitempty"`
             }
 
-            // CreateScopeRequest ...
-            type CreateScopeRequest struct {
+            // Attributes ...
+            type Attributes struct {
+            StringValue *string `json:"string_value,omitempty"`
+            BytesValue *[]byte `json:"bytes_value,omitempty"`
+            Scope *string `json:"scope,omitempty"`
+            Key *string `json:"key,omitempty"`
+            }
+
+            // CreateScopeAttributes ...
+            type CreateScopeAttributes struct {
             Scope *string `json:"scope,omitempty"`
             InitialManagePrincipal *string `json:"initial_manage_principal,omitempty"`
             }
 
-            // DeleteScopeRequest ...
-            type DeleteScopeRequest struct {
+            // DeleteScopeAttributes ...
+            type DeleteScopeAttributes struct {
             Scope *string `json:"scope,omitempty"`
             }
 
@@ -114,19 +122,19 @@ const fqdn = "github.com/innovationnorway/go-databricks/secrets"
             Scopes *[]ScopeAttributes `json:"scopes,omitempty"`
             }
 
-            // ListSecretsAclsRequest ...
-            type ListSecretsAclsRequest struct {
+            // ListSecretAclsAttributes ...
+            type ListSecretAclsAttributes struct {
             Scope *string `json:"scope,omitempty"`
             }
 
-            // ListSecretsAclsResult ...
-            type ListSecretsAclsResult struct {
+            // ListSecretAclsResult ...
+            type ListSecretAclsResult struct {
             autorest.Response `json:"-"`
-            Scope *[]ACLItemAttribute `json:"scope,omitempty"`
+            Scope *[]ACLItemAttributes `json:"scope,omitempty"`
             }
 
-            // ListSecretsRequest ...
-            type ListSecretsRequest struct {
+            // ListSecretsAttributes ...
+            type ListSecretsAttributes struct {
             Scope *string `json:"scope,omitempty"`
             }
 
@@ -136,20 +144,12 @@ const fqdn = "github.com/innovationnorway/go-databricks/secrets"
             LastUpdatedTimestamp *int64 `json:"last_updated_timestamp,omitempty"`
             }
 
-            // PutSecretACLRequest ...
-            type PutSecretACLRequest struct {
+            // PutSecretAclsAttributes ...
+            type PutSecretAclsAttributes struct {
             Scope *string `json:"scope,omitempty"`
             Principal *string `json:"principal,omitempty"`
             // Permission - Possible values include: 'READ', 'WRITE', 'MANAGE'
             Permission Permission `json:"permission,omitempty"`
-            }
-
-            // Request ...
-            type Request struct {
-            StringValue *string `json:"string_value,omitempty"`
-            BytesValue *[]byte `json:"bytes_value,omitempty"`
-            Scope *string `json:"scope,omitempty"`
-            Key *string `json:"key,omitempty"`
             }
 
             // ScopeAttributes ...
