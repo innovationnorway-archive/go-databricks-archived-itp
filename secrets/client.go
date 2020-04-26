@@ -40,7 +40,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
 }
 
     // CreateScope sends the create scope request.
-    func (client BaseClient) CreateScope(ctx context.Context, body CreateScopeRequest) (result autorest.Response, err error) {
+    func (client BaseClient) CreateScope(ctx context.Context, body CreateScopeAttributes) (result autorest.Response, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.CreateScope")
             defer func() {
@@ -79,7 +79,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // CreateScopePreparer prepares the CreateScope request.
-        func (client BaseClient) CreateScopePreparer(ctx context.Context, body CreateScopeRequest) (*http.Request, error) {
+        func (client BaseClient) CreateScopePreparer(ctx context.Context, body CreateScopeAttributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
         autorest.AsPost(),
@@ -108,7 +108,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // Delete sends the delete request.
-    func (client BaseClient) Delete(ctx context.Context, body Request) (result autorest.Response, err error) {
+    func (client BaseClient) Delete(ctx context.Context, body Attributes) (result autorest.Response, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.Delete")
             defer func() {
@@ -148,7 +148,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // DeletePreparer prepares the Delete request.
-        func (client BaseClient) DeletePreparer(ctx context.Context, body Request) (*http.Request, error) {
+        func (client BaseClient) DeletePreparer(ctx context.Context, body Attributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
         autorest.AsPost(),
@@ -177,7 +177,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // DeleteAcls sends the delete acls request.
-    func (client BaseClient) DeleteAcls(ctx context.Context, body AclsRequest) (result autorest.Response, err error) {
+    func (client BaseClient) DeleteAcls(ctx context.Context, body AclsAttributes) (result autorest.Response, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.DeleteAcls")
             defer func() {
@@ -217,7 +217,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // DeleteAclsPreparer prepares the DeleteAcls request.
-        func (client BaseClient) DeleteAclsPreparer(ctx context.Context, body AclsRequest) (*http.Request, error) {
+        func (client BaseClient) DeleteAclsPreparer(ctx context.Context, body AclsAttributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
         autorest.AsPost(),
@@ -246,7 +246,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // DeleteScope sends the delete scope request.
-    func (client BaseClient) DeleteScope(ctx context.Context, body DeleteScopeRequest) (result autorest.Response, err error) {
+    func (client BaseClient) DeleteScope(ctx context.Context, body DeleteScopeAttributes) (result autorest.Response, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.DeleteScope")
             defer func() {
@@ -285,7 +285,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // DeleteScopePreparer prepares the DeleteScope request.
-        func (client BaseClient) DeleteScopePreparer(ctx context.Context, body DeleteScopeRequest) (*http.Request, error) {
+        func (client BaseClient) DeleteScopePreparer(ctx context.Context, body DeleteScopeAttributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
         autorest.AsPost(),
@@ -314,7 +314,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // GetAcls sends the get acls request.
-    func (client BaseClient) GetAcls(ctx context.Context, body AclsRequest) (result AclsResult, err error) {
+    func (client BaseClient) GetAcls(ctx context.Context, body AclsAttributes) (result AclsResult, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.GetAcls")
             defer func() {
@@ -354,10 +354,10 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // GetAclsPreparer prepares the GetAcls request.
-        func (client BaseClient) GetAclsPreparer(ctx context.Context, body AclsRequest) (*http.Request, error) {
+        func (client BaseClient) GetAclsPreparer(ctx context.Context, body AclsAttributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
-        autorest.AsPost(),
+        autorest.AsGet(),
         autorest.WithBaseURL(client.BaseURI),
         autorest.WithPath("/secrets/acls/get"),
         autorest.WithJSON(body))
@@ -384,7 +384,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // List sends the list request.
-    func (client BaseClient) List(ctx context.Context, body ListSecretsRequest) (result ListResult, err error) {
+    func (client BaseClient) List(ctx context.Context, body ListSecretsAttributes) (result ListResult, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.List")
             defer func() {
@@ -423,7 +423,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // ListPreparer prepares the List request.
-        func (client BaseClient) ListPreparer(ctx context.Context, body ListSecretsRequest) (*http.Request, error) {
+        func (client BaseClient) ListPreparer(ctx context.Context, body ListSecretsAttributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
         autorest.AsGet(),
@@ -453,25 +453,18 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // ListAcls sends the list acls request.
-    func (client BaseClient) ListAcls(ctx context.Context, body PutSecretACLRequest) (result autorest.Response, err error) {
+    func (client BaseClient) ListAcls(ctx context.Context, body ListSecretAclsAttributes) (result ListSecretAclsResult, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.ListAcls")
             defer func() {
                 sc := -1
-                if result.Response != nil {
-                    sc = result.Response.StatusCode
+                if result.Response.Response != nil {
+                    sc = result.Response.Response.StatusCode
                 }
                 tracing.EndSpan(ctx, sc, err)
             }()
         }
-                if err := validation.Validate([]validation.Validation{
-                { TargetValue: body,
-                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
-                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
-                return result, validation.NewError("secrets.BaseClient", "ListAcls", err.Error())
-                }
-
-                    req, err := client.ListAclsPreparer(ctx, body)
+            req, err := client.ListAclsPreparer(ctx, body)
         if err != nil {
         err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls", nil , "Failure preparing request")
         return
@@ -479,7 +472,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
 
                 resp, err := client.ListAclsSender(req)
                 if err != nil {
-                result.Response = resp
+                result.Response = autorest.Response{Response: resp}
                 err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls", resp, "Failure sending request")
                 return
                 }
@@ -493,12 +486,12 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // ListAclsPreparer prepares the ListAcls request.
-        func (client BaseClient) ListAclsPreparer(ctx context.Context, body PutSecretACLRequest) (*http.Request, error) {
+        func (client BaseClient) ListAclsPreparer(ctx context.Context, body ListSecretAclsAttributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
-        autorest.AsPost(),
+        autorest.AsGet(),
         autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/secrets/acls/put"),
+        autorest.WithPath("/secrets/acls/list"),
         autorest.WithJSON(body))
         return preparer.Prepare((&http.Request{}).WithContext(ctx))
         }
@@ -511,69 +504,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
 
     // ListAclsResponder handles the response to the ListAcls request. The method always
     // closes the http.Response Body.
-    func (client BaseClient) ListAclsResponder(resp *http.Response) (result autorest.Response, err error) {
-        err = autorest.Respond(
-        resp,
-        client.ByInspecting(),
-        azure.WithErrorUnlessStatusCode(http.StatusOK),
-        autorest.ByClosing())
-        result.Response = resp
-            return
-        }
-
-    // ListAcls1 sends the list acls 1 request.
-    func (client BaseClient) ListAcls1(ctx context.Context, body ListSecretsAclsRequest) (result ListSecretsAclsResult, err error) {
-        if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.ListAcls1")
-            defer func() {
-                sc := -1
-                if result.Response.Response != nil {
-                    sc = result.Response.Response.StatusCode
-                }
-                tracing.EndSpan(ctx, sc, err)
-            }()
-        }
-            req, err := client.ListAcls1Preparer(ctx, body)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls1", nil , "Failure preparing request")
-        return
-        }
-
-                resp, err := client.ListAcls1Sender(req)
-                if err != nil {
-                result.Response = autorest.Response{Response: resp}
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls1", resp, "Failure sending request")
-                return
-                }
-
-                result, err = client.ListAcls1Responder(resp)
-                if err != nil {
-                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "ListAcls1", resp, "Failure responding to request")
-                }
-
-        return
-        }
-
-        // ListAcls1Preparer prepares the ListAcls1 request.
-        func (client BaseClient) ListAcls1Preparer(ctx context.Context, body ListSecretsAclsRequest) (*http.Request, error) {
-            preparer := autorest.CreatePreparer(
-        autorest.AsContentType("application/json; charset=utf-8"),
-        autorest.AsGet(),
-        autorest.WithBaseURL(client.BaseURI),
-        autorest.WithPath("/secrets/acls/list"),
-        autorest.WithJSON(body))
-        return preparer.Prepare((&http.Request{}).WithContext(ctx))
-        }
-
-        // ListAcls1Sender sends the ListAcls1 request. The method will close the
-        // http.Response Body if it receives an error.
-        func (client BaseClient) ListAcls1Sender(req *http.Request) (*http.Response, error) {
-                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-                }
-
-    // ListAcls1Responder handles the response to the ListAcls1 request. The method always
-    // closes the http.Response Body.
-    func (client BaseClient) ListAcls1Responder(resp *http.Response) (result ListSecretsAclsResult, err error) {
+    func (client BaseClient) ListAclsResponder(resp *http.Response) (result ListSecretAclsResult, err error) {
         err = autorest.Respond(
         resp,
         client.ByInspecting(),
@@ -646,7 +577,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
     // Put sends the put request.
-    func (client BaseClient) Put(ctx context.Context, body Request) (result autorest.Response, err error) {
+    func (client BaseClient) Put(ctx context.Context, body Attributes) (result autorest.Response, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.Put")
             defer func() {
@@ -686,7 +617,7 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
         }
 
         // PutPreparer prepares the Put request.
-        func (client BaseClient) PutPreparer(ctx context.Context, body Request) (*http.Request, error) {
+        func (client BaseClient) PutPreparer(ctx context.Context, body Attributes) (*http.Request, error) {
             preparer := autorest.CreatePreparer(
         autorest.AsContentType("application/json; charset=utf-8"),
         autorest.AsPost(),
@@ -705,6 +636,75 @@ func NewWithBaseURI(baseURI string, ) BaseClient {
     // PutResponder handles the response to the Put request. The method always
     // closes the http.Response Body.
     func (client BaseClient) PutResponder(resp *http.Response) (result autorest.Response, err error) {
+        err = autorest.Respond(
+        resp,
+        client.ByInspecting(),
+        azure.WithErrorUnlessStatusCode(http.StatusOK),
+        autorest.ByClosing())
+        result.Response = resp
+            return
+        }
+
+    // PutAcls sends the put acls request.
+    func (client BaseClient) PutAcls(ctx context.Context, body PutSecretAclsAttributes) (result autorest.Response, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.PutAcls")
+            defer func() {
+                sc := -1
+                if result.Response != nil {
+                    sc = result.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+                if err := validation.Validate([]validation.Validation{
+                { TargetValue: body,
+                 Constraints: []validation.Constraint{	{Target: "body.Scope", Name: validation.Null, Rule: true, Chain: nil },
+                	{Target: "body.Principal", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+                return result, validation.NewError("secrets.BaseClient", "PutAcls", err.Error())
+                }
+
+                    req, err := client.PutAclsPreparer(ctx, body)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "secrets.BaseClient", "PutAcls", nil , "Failure preparing request")
+        return
+        }
+
+                resp, err := client.PutAclsSender(req)
+                if err != nil {
+                result.Response = resp
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "PutAcls", resp, "Failure sending request")
+                return
+                }
+
+                result, err = client.PutAclsResponder(resp)
+                if err != nil {
+                err = autorest.NewErrorWithError(err, "secrets.BaseClient", "PutAcls", resp, "Failure responding to request")
+                }
+
+        return
+        }
+
+        // PutAclsPreparer prepares the PutAcls request.
+        func (client BaseClient) PutAclsPreparer(ctx context.Context, body PutSecretAclsAttributes) (*http.Request, error) {
+            preparer := autorest.CreatePreparer(
+        autorest.AsContentType("application/json; charset=utf-8"),
+        autorest.AsPost(),
+        autorest.WithBaseURL(client.BaseURI),
+        autorest.WithPath("/secrets/acls/put"),
+        autorest.WithJSON(body))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
+
+        // PutAclsSender sends the PutAcls request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) PutAclsSender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                }
+
+    // PutAclsResponder handles the response to the PutAcls request. The method always
+    // closes the http.Response Body.
+    func (client BaseClient) PutAclsResponder(resp *http.Response) (result autorest.Response, err error) {
         err = autorest.Respond(
         resp,
         client.ByInspecting(),

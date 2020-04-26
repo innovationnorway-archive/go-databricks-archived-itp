@@ -11,16 +11,16 @@ import (
 
         // BaseClientAPI contains the set of methods on the BaseClient type.
         type BaseClientAPI interface {
-            CreateScope(ctx context.Context, body secrets.CreateScopeRequest) (result autorest.Response, err error)
-            Delete(ctx context.Context, body secrets.Request) (result autorest.Response, err error)
-            DeleteAcls(ctx context.Context, body secrets.AclsRequest) (result autorest.Response, err error)
-            DeleteScope(ctx context.Context, body secrets.DeleteScopeRequest) (result autorest.Response, err error)
-            GetAcls(ctx context.Context, body secrets.AclsRequest) (result secrets.AclsResult, err error)
-            List(ctx context.Context, body secrets.ListSecretsRequest) (result secrets.ListResult, err error)
-            ListAcls(ctx context.Context, body secrets.PutSecretACLRequest) (result autorest.Response, err error)
-            ListAcls1(ctx context.Context, body secrets.ListSecretsAclsRequest) (result secrets.ListSecretsAclsResult, err error)
+            CreateScope(ctx context.Context, body secrets.CreateScopeAttributes) (result autorest.Response, err error)
+            Delete(ctx context.Context, body secrets.Attributes) (result autorest.Response, err error)
+            DeleteAcls(ctx context.Context, body secrets.AclsAttributes) (result autorest.Response, err error)
+            DeleteScope(ctx context.Context, body secrets.DeleteScopeAttributes) (result autorest.Response, err error)
+            GetAcls(ctx context.Context, body secrets.AclsAttributes) (result secrets.AclsResult, err error)
+            List(ctx context.Context, body secrets.ListSecretsAttributes) (result secrets.ListResult, err error)
+            ListAcls(ctx context.Context, body secrets.ListSecretAclsAttributes) (result secrets.ListSecretAclsResult, err error)
             ListScopes(ctx context.Context) (result secrets.ListScopesResult, err error)
-            Put(ctx context.Context, body secrets.Request) (result autorest.Response, err error)
+            Put(ctx context.Context, body secrets.Attributes) (result autorest.Response, err error)
+            PutAcls(ctx context.Context, body secrets.PutSecretAclsAttributes) (result autorest.Response, err error)
         }
 
         var _ BaseClientAPI = (*secrets.BaseClient)(nil)
