@@ -22,4 +22,4 @@ validate:
 	  --input-file=dbfs.yaml \
 	  --input-file=groups.yaml \
 	  --input-file=workspace.yaml \
-      --input-file=secrets.yaml
+	  --input-file=secrets.yaml
